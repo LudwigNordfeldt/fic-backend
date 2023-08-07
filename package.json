@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "echo ''",
     "start:prod": "node serverDist/index.js"
   },
   "author": "LudwigNordfeldt",
@@ -29,8 +29,6 @@
     "child_process": "^1.0.2",
     "constants-browserify": "^1.0.0",
     "express": "^4.18.2",
-    "module": "^1.2.5",
-    "ngrok": "^5.0.0-beta.2",
     "ngx-pagination": "^6.0.3",
     "puppeteer": "^13.7.0",
     "puppeteer-extra": "^3.3.6",
@@ -42,7 +40,6 @@
     "utf-8-validate": "^6.0.3",
     "webpack-node-externals": "^3.0.0",
     "ws": "^8.13.0",
-    "yarn": "^1.22.19",
     "zone.js": "^0.13.1"
   },
   "devDependencies": {
@@ -72,8 +69,6 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tls": "^0.0.1",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6",
     "url": "^0.11.1",
     "util": "^0.12.5",
