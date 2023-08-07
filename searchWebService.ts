@@ -168,7 +168,7 @@ export class GetFics {
 
         for (let s of textField) {
           const sText = await (await s.getProperty('textContent')).jsonValue();
-          text.push(this.sanitizeString(sText!));
+          text.push(this.sanitizeString(JSON.stringify(sText)));
         }
         full.push(text);
       }
@@ -184,7 +184,7 @@ export class GetFics {
 
       for (let s of textField) {
         const sText = await (await s.getProperty('textContent')).jsonValue();
-        text.push(this.sanitizeString(sText!));
+        text.push(this.sanitizeString(JSON.stringify(sText)));
       }
 
       full.push(text);
