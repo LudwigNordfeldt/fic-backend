@@ -1,33 +1,42 @@
-import puppeteer from 'puppeteer-extra';
-import { pageExtend } from 'puppeteer-jquery';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { Page } from 'puppeteer';
+import puppeteer from "puppeteer-extra";
+import { pageExtend } from "puppeteer-jquery";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { Page } from "puppeteer";
 
 puppeteer.use(StealthPlugin());
+
+let browser;
+let page;
+let pageJQ;
 
 export class GetFics {
   async getFandoms(text: string) {
     if (!text?.length) {
       return [];
     }
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const pageJQ = pageExtend(page);
-    const preliminaryAO3 = 'https://archiveofourown.org/works/search';
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
+
+    const preliminaryAO3 = "https://archiveofourown.org/works/search";
 
     await pageJQ.goto(preliminaryAO3);
 
-    await pageJQ.type('#work_search_fandom_names_autocomplete', text);
+    await pageJQ.type("#work_search_fandom_names_autocomplete", text);
     await pageJQ.waitForjQuery(
       "p:contains('No suggestions found'), #new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(2) > ul > li > div > ul"
     );
     const fs = await pageJQ.$$(
-      '#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(2) > ul > li > div > ul > li'
+      "#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(2) > ul > li > div > ul > li"
     );
-    return Promise.all(fs.map(async (f) => {
-      const ff = await f?.getProperty('textContent');
-      return ff?.toString().slice(9);
-    }));
+    return Promise.all(
+      fs.map(async (f) => {
+        const ff = await f?.getProperty("textContent");
+        return ff?.toString().slice(9);
+      })
+    );
   }
 
   async getTags(text: string) {
@@ -35,72 +44,89 @@ export class GetFics {
       return [];
     }
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const pageJQ = pageExtend(page);
-    const preliminaryAO3 = 'https://archiveofourown.org/works/search';
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
+
+    const preliminaryAO3 = "https://archiveofourown.org/works/search";
 
     await pageJQ.goto(preliminaryAO3);
 
-    await pageJQ.type('#work_search_freeform_names_autocomplete', text);
+    await pageJQ.type("#work_search_freeform_names_autocomplete", text);
     await pageJQ.waitForjQuery(
       "p:contains('No suggestions found'), #new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(14) > ul > li > div > ul"
     );
     const fs = await pageJQ.$$(
-      '#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(14) > ul > li > div > ul > li'
+      "#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(14) > ul > li > div > ul > li"
     );
-    return Promise.all(fs.map(async (f) => {
-      const ff = await f?.getProperty('textContent');
-      return ff?.toString().slice(9);
-    }));
+    return Promise.all(
+      fs.map(async (f) => {
+        const ff = await f?.getProperty("textContent");
+        return ff?.toString().slice(9);
+      })
+    );
   }
 
   async getChars(text: string) {
     if (!text?.length) {
       return [];
     }
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const pageJQ = pageExtend(page);
-    const preliminaryAO3 = 'https://archiveofourown.org/works/search';
+
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
+
+    const preliminaryAO3 = "https://archiveofourown.org/works/search";
 
     await pageJQ.goto(preliminaryAO3);
 
-    await pageJQ.type('#work_search_character_names_autocomplete', text);
+    await pageJQ.type("#work_search_character_names_autocomplete", text);
     await pageJQ.waitForjQuery(
       "p:contains('No suggestions found'), #new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(10) > ul > li > div > ul"
     );
     const fs = await pageJQ.$$(
-      '#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(10) > ul > li > div > ul > li'
+      "#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(10) > ul > li > div > ul > li"
     );
-    return Promise.all(fs.map(async (f) => {
-      const ff = await f?.getProperty('textContent');
-      return ff?.toString().slice(9);
-    }));
+    return Promise.all(
+      fs.map(async (f) => {
+        const ff = await f?.getProperty("textContent");
+        return ff?.toString().slice(9);
+      })
+    );
   }
 
   async getRels(text: string) {
     if (!text?.length) {
       return [];
     }
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const pageJQ = pageExtend(page);
-    const preliminaryAO3 = 'https://archiveofourown.org/works/search';
+
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
+
+    const preliminaryAO3 = "https://archiveofourown.org/works/search";
 
     await pageJQ.goto(preliminaryAO3);
 
-    await pageJQ.type('#work_search_relationship_names_autocomplete', text);
+    await pageJQ.type("#work_search_relationship_names_autocomplete", text);
     await pageJQ.waitForjQuery(
       "p:contains('No suggestions found'), #new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(12) > ul > li > div > ul"
     );
     const fs = await pageJQ.$$(
-      '#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(12) > ul > li > div > ul > li'
+      "#new_work_search > fieldset:nth-child(2) > dl > dd:nth-child(12) > ul > li > div > ul > li"
     );
-    return Promise.all(fs.map(async (f) => {
-      const ff = await f?.getProperty('textContent');
-      return ff?.toString().slice(9);
-    }));
+    return Promise.all(
+      fs.map(async (f) => {
+        const ff = await f?.getProperty("textContent");
+        return ff?.toString().slice(9);
+      })
+    );
   }
 
   sanitizeString(str: string) {
@@ -109,11 +135,15 @@ export class GetFics {
   }
 
   async getFicText(url: string) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
 
-    const delay = (milliseconds: number | undefined) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    await pageJQ.goto(url);
+
+    //const delay = (milliseconds: number | undefined) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
     // await delay(2000);
 
@@ -131,59 +161,64 @@ export class GetFics {
     //   await page.click('#accept_tos');
     // } catch (err) { }
 
+    //await delay(100);
 
-    await delay(100);
+    await pageJQ.waitForjQuery(
+      "p.caution, li.chapter"
+    );
 
-    let caution = await page.$('p.caution')
+    let caution = await pageJQ.$("p.caution");
 
-    await delay(100);
+    //await delay(100);
 
     if (caution) {
-      await page.click('#main > ul > li:nth-child(1)')
+      await pageJQ.click("#main > ul > li:nth-child(1)");
+      await pageJQ.waitForjQuery('li.chapter');
     }
 
-    await delay(200);
+    //await delay(200);
 
-    let entire = await page.$('li.chapter.entire');
+    let entire = await pageJQ.$("li.chapter.entire");
 
-    await delay(200);
+    //await delay(200);
 
     if (entire) {
       try {
-        await page.click('li.chapter.entire')
-      } catch (err) { }
+        await pageJQ.click("li.chapter.entire");
+        await pageJQ.waitForjQuery("div#chapters > .chapter");
+        await page.waitForTimeout(800);
+      } catch (err) {}
 
-      console.log("Pressed")
-      await delay(1500);
-      const chapters = await page.$$('div#chapters > .chapter');
+      console.log("Pressed");
+      //await delay(1500);
+      const chapters = await (await page.$$("div#chapters > .chapter"));
 
-      console.log("Chapters fetched:", chapters.length)
+      console.log("Chapters fetched:", chapters.length);
 
-      let full = [];
+      let full: string[][] = [];
 
       for (let c of chapters) {
         const textField = await c.$$("div[role=article] > p");
-        let text: any[];
+        let text: string[];
         text = [];
 
         for (let s of textField) {
-          const sText = await (await s.getProperty('textContent')).jsonValue();
+          const sText = await (await s.getProperty("textContent")).jsonValue();
           text.push(this.sanitizeString(JSON.stringify(sText)));
         }
         full.push(text);
       }
       return full;
-    }
-    else {
+    } else {
       console.log("Not pressed");
-      const textField = await page.$$("div[role='article'] > div > p");
+      const textField = await pageJQ.$$("div[role='article'] > div > p");
       let text: any[];
       text = [];
 
-      let full = [];
+      let full: string[][] = [];
 
       for (let s of textField) {
-        const sText = await (await s.getProperty('textContent')).jsonValue();
+        const sText = await (await s.getProperty("textContent")).jsonValue();
         text.push(this.sanitizeString(JSON.stringify(sText)));
       }
 
@@ -193,7 +228,6 @@ export class GetFics {
     }
 
     // div#chapters > .chapter
-
   }
 
   async getFictions(
@@ -206,46 +240,53 @@ export class GetFics {
     fandom: string,
     fetchesNumber: number
   ) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    if (!browser){
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      pageJQ = pageExtend(page);
+    }
 
     //const preliminaryFF = 'https://www.fanfiction.net/search/?popup=1';
 
     const ao3url =
       `https://archiveofourown.org/works/search?commit=Search&work_search%5Bquery%5D=` +
-      `${summary ?? ''}&work_search%5Btitle%5D=` +
-      `${title ?? ''}&work_search%5Bcreators%5D=` +
-      `${author ?? ''
+      `${summary ?? ""}&work_search%5Btitle%5D=` +
+      `${title ?? ""}&work_search%5Bcreators%5D=` +
+      `${
+        author ?? ""
       }&work_search%5Brevised_at%5D=&work_search%5Bcomplete%5D=&work_search%5Bcrossover%5D=&work_search%5Bsingle_chapter%5D=0&work_search%5Bword_count%5D=&work_search%5Blanguage_id%5D=&work_search%5Bfandom_names%5D=` +
-      `${fandom ?? ''
+      `${
+        fandom ?? ""
       }&work_search%5Brating_ids%5D=&work_search%5Bcharacter_names%5D=` +
-      `${characters?.join(',') ?? ''}&work_search%5Brelationship_names%5D=${relationships?.map(rel => encodeURIComponent(rel))?.join(',') ?? ''
+      `${characters?.join(",") ?? ""}&work_search%5Brelationship_names%5D=${
+        relationships?.map((rel) => encodeURIComponent(rel))?.join(",") ?? ""
       }` +
       `&work_search%5Bfreeform_names%5D=` +
-      `${filterTags?.join(',') ?? ''
+      `${
+        filterTags?.join(",") ?? ""
       }&work_search%5Bhits%5D=&work_search%5Bkudos_count%5D=&work_search%5Bcomments_count%5D=&work_search%5Bbookmarks_count%5D=&work_search%5Bsort_column%5D=_score&work_search%5Bsort_direction%5D=desc`;
 
     //const fnurl = `https://www.fanfiction.net/search/?keywords=Fire+Nation&type=story&match=any&formatid=any&sort=0&genreid1=0&genreid2=0&characterid1=0&characterid2=0&characterid3=0&characterid4=0&words=0&ready=1&categoryid=2002#`;
 
     await page.goto(ao3url);
 
-    const delay = (milliseconds: number | undefined) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    //const delay = (milliseconds: number | undefined) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
-    await delay(2000);
+    //await delay(2000);
 
-    await page.waitForSelector('#tos_agree', { timeout: 2000 });
-
-    try {
-      await page.click('#tos_agree');
-    } catch (err) { }
-
-    await delay(300);
-
-    await page.waitForSelector('#accept_tos', { timeout: 200 });
+    await page.waitForSelector("#tos_agree", { timeout: 2000 });
 
     try {
-      await page.click('#accept_tos');
-    } catch (err) { }
+      await page.click("#tos_agree");
+    } catch (err) {}
+
+    //await delay(300);
+
+    await page.waitForSelector("#accept_tos", { timeout: 200 });
+
+    try {
+      await page.click("#accept_tos");
+    } catch (err) {}
 
     let fics: Object[] = [];
 
@@ -253,11 +294,10 @@ export class GetFics {
       //await page.waitForSelector('.next');
       await this.fetchFictions(fics, page);
       try {
-        await page.click('.next');
-      } catch (err) { }
+        await page.click(".next");
+      } catch (err) {}
     }
 
-    await browser.close();
     return fics;
   }
 
@@ -266,36 +306,36 @@ export class GetFics {
 
     for (let node of nodes) {
       try {
-        let id = await (await node.getProperty('id')).jsonValue();
+        let id = await (await node.getProperty("id")).jsonValue();
         let heading = await page.$$(`#${id} > div > h4 > a`);
         let name = await (
-          await heading[0].getProperty('textContent')
+          await heading[0].getProperty("textContent")
         ).jsonValue();
 
-        let link = await (await heading[0].getProperty('href')).jsonValue();
+        let link = await (await heading[0].getProperty("href")).jsonValue();
 
         if (heading.length == 2) {
           var creator = await (
-            await heading[1].getProperty('textContent')
+            await heading[1].getProperty("textContent")
           ).jsonValue();
         } else {
-          let creator = 'Anonymous';
+          let creator = "Anonymous";
         }
 
         let sumsec = await page.$$(`#${id} > blockquote > p`);
-        let sum = '';
+        let sum = "";
         let tags = await page.$$(`#${id} > ul > li > a`);
-        let ftags = [];
+        let ftags: string[] = [];
 
         for (let tag of tags) {
-          const tagName = await (
-            await tag.getProperty('textContent')
+          const tagName: string = await (
+            await tag.getProperty("textContent")
           ).jsonValue();
           ftags.push(tagName);
         }
 
         for (let s of sumsec) {
-          const sText = await (await s.getProperty('textContent')).jsonValue();
+          const sText = await (await s.getProperty("textContent")).jsonValue();
           sum += sText;
         }
 
@@ -304,11 +344,10 @@ export class GetFics {
           author: creator!,
           tags: ftags,
           summary: sum,
-          url: link
+          url: link,
         };
         fics.push(fanfiction);
-      } catch (Exception) { }
+      } catch (Exception) {}
     }
   }
-
 }
