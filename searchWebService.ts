@@ -268,6 +268,7 @@ export class GetFics {
 
     //const fnurl = `https://www.fanfiction.net/search/?keywords=Fire+Nation&type=story&match=any&formatid=any&sort=0&genreid1=0&genreid2=0&characterid1=0&characterid2=0&characterid3=0&characterid4=0&words=0&ready=1&categoryid=2002#`;
 
+    console.log("Link: ", ao3url);
     await page.goto(ao3url);
 
     //const delay = (milliseconds: number | undefined) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -278,7 +279,7 @@ export class GetFics {
 
     try {
       await page.click("#tos_agree");
-    } catch (err) {}
+    } catch (err) {console.log(err)}
 
     //await delay(300);
 
@@ -286,7 +287,7 @@ export class GetFics {
 
     try {
       await page.click("#accept_tos");
-    } catch (err) {}
+    } catch (err) {console.log(err)}
 
     let fics: Object[] = [];
 
@@ -295,7 +296,7 @@ export class GetFics {
       await this.fetchFictions(fics, page);
       try {
         await page.click(".next");
-      } catch (err) {}
+      } catch (err) {console.log(err)}
     }
 
     return fics;
